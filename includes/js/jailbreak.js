@@ -19,7 +19,7 @@ async function jailbreak() {
   }
 
   cleanUp();
-  
+
   payloadPath = storage.session.getString('payload_path', null);
   log("Loading: " + payloadPath);
 
@@ -82,37 +82,58 @@ async function badHoistJailbreak() {
     log("An error occured during Bad Hoist Entrypoint\nReload and try again.", "orange");
     storage.session.remove('jailbreakNow');
     return;
-  }
-  else
+  } else {
     log("Bad Hoist Entrypoint succeeded");
+  }
+
   if (window.exploitsetup672_result < 1) {
-    log("An error occured during Exploit Setup\nPlease refresh page and try again...", "red");
+    log("An error occured during Exploit Setup\nPlease refresh page and run again...", "red");
     storage.session.remove('jailbreakNow');
     return;
-  }
-  else
+  } else {
     log("Exploit Setup complete\n");
+  }
+
   log("Starting Kernel Exploit...");
   await sleep(200); // Wait 200ms
 
   await loadScript('./src/badhoist/672kexploit.js', false, devMode);
   var result = KernelExploit672();
+
   var payloadPath = storage.session.getString('payload_path', '');
+  let isElfPayload = isPayloadElf(payloadPath);
+  let elfLoaderAvailable = await probeElfLoader();
 
-  if (result === 0 || result === 91) {
-    log("\nKernel exploit succeeded", "green");
-    // Inject HEN payload
-    log("Injecting payload: " + payloadPath);
-    getPayload672(payloadPath);
+  let injectionPath = payloadPath;
+  if (isElfPayload) {
+    if (elfLoaderAvailable) {
+      log("elfldr is already running. Skipping elfldr.bin boot.", "green");
+    } else {
+      log("elfldr not running. Booting elfldr.bin first...", "yellow");
+      injectionPath = './includes/payloads/Bins/elfldr.bin';
+    }
+  }
 
-    log("\nBad Hoist by Fire30, 6.7x Kernel Exploit by Sleirsgoevy");
-    log("Implementation taken from Feyzee61");
-    jailbreakSuccess();
-  } else if (result === 179) {
-    log("\nAlready jailbroken, skipping..", "green");
-    log("Injecting payload: " + payloadPath);
-    getPayload672(payloadPath);
-    log("Payload injected successfully", "green");
+  if (result === 0 || result === 91 || result === 179) {
+    if (result === 179) {
+      log("\nAlready jailbroken, skipping..", "green");
+    } else {
+      log("\nKernel exploit succeeded", "green");
+    }
+
+    // Inject either the binary payload or elfldr.bin
+    log("Injecting payload: " + injectionPath);
+    getPayload672(injectionPath);
+
+    if (isElfPayload) {
+      if (elfLoaderAvailable) {
+        log("Sending the ELF payload: " + payloadPath, "green");
+        Loadpayloadlocal(payloadPath, getPayloadName(payloadPath), "jailbreak");
+      } else {
+        log("Error: Failed to connect to elfldr on port 9021.", "red");
+      }
+    }
+
     log("\nBad Hoist by Fire30, 6.7x Kernel Exploit by Sleirsgoevy");
     log("Implementation taken from Feyzee61");
     jailbreakSuccess();
@@ -211,7 +232,7 @@ function cleanUp() {
   }
 
   // if RTL language, keep text from left to right
-  if (isRtl()){
+  if (isRtl()) {
     document.getElementById('DebugConsole').style.textAlign = 'end';
   }
 
