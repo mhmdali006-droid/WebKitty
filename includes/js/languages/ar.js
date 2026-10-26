@@ -3,7 +3,7 @@ window.lang = {
   "ps4FwIncompatible": `بلايستايشن 4 إصدار {ps4fw} | غير مدعوم`,
   "notPs4": "انت لست على جهاز بلايستايشن 4, المنصة: ",
   "clickToStart": "انقر للبدء",
-  "chooseHEN": "اختر نكهتك",
+  "chooseHEN": "اختر إصدار HEN",
   "exploitStatusHeader": "حالة الثغرة",
   "payloadsHeader": "الحمولات",
   "settingsBtnTitle": "الإعدادات",
