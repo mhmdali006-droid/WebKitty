@@ -1,8 +1,8 @@
 function loadLanguage() {
     var langRadio = document.querySelector('input[name="language"][value="' + user.currentLanguage + '"]');
     if (!langRadio) {
-        user.currentLanguage = 'en';
-        langRadio = document.querySelector('input[name="language"][value="en"]');
+        user.currentLanguage = 'ar';
+        langRadio = document.querySelector('input[name="language"][value="ar"]');
     }
     if (langRadio) langRadio.checked = true;
 

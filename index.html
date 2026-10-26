@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 
 <head>
     <meta charset="UTF-8">
@@ -16,18 +16,19 @@
     <meta property="og:title" content="WebKitty">
     <meta property="og:description"
         content="WebKitty is a user-friendly, feature-rich PS4 exploit host for 4.50-5.07 & 6.70 - 13.52.">
-    <meta property="og:image" content="http://webkitty.arabpixel.net/includes/assets/icons/webkitty.svg">
-    <meta property="og:url" content="http://webkitty.arabpixel.net">
+    <meta property="og:image" content="http://webkitty.ps4.dpdns.org/includes/assets/icons/webkitty.svg">
+    <meta property="og:url" content="http://webkitty.ps4.dpdns.org">
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="WebKitty">
     <meta name="twitter:description"
         content="WebKitty is a user-friendly, feature-rich PS4 exploit host for 4.50-5.07 & 6.70 - 13.52.">
-    <meta name="twitter:image" content="http://webkitty.arabpixel.net/includes/assets/icons/webkitty.svg">
+    <meta name="twitter:image" content="http://webkitty.ps4.dpdns.org/includes/assets/icons/webkitty.svg">
     <link rel="icon" href="./includes/assets/icons/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" id="main-stylesheet" href="">
     <link rel="stylesheet" id="color-stylesheet" href="">
+    <link rel="stylesheet" href="./includes/css/odin-custom.css">
     <script>
         // Prevent "Theme Flash" by applying the href before the body renders
         var savedTheme = localStorage.getItem('theme') || "index";
@@ -39,7 +40,9 @@
             document.getElementById('color-stylesheet').setAttribute('href', './includes/css/colors/' + savedColor + '.css');
         }
         var rtlLangs = ["ar", "fa"];
-        if (rtlLangs.indexOf(localStorage.getItem('language')) !== -1)
+        var savedLanguage = localStorage.getItem('language') || 'ar';
+        document.documentElement.lang = savedLanguage;
+        if (rtlLangs.indexOf(savedLanguage) !== -1)
             document.dir = "rtl";
         else
             document.dir = "ltr";
@@ -52,7 +55,7 @@
         if (isThisPS4 && goToHttps && !isLocalServer && isCurrentHTTPS){
             if (confirm("You are currently using HTTPS, which prevents loading payloads through a bin/elf loader servers, switch to http instead? (recommended)")){
                 window.abortLoading = true;
-                window.location.href = "http://webkitty.arabpixel.net";
+                window.location.href = "http://webkitty.ps4.dpdns.org";
             } else{
                 localStorage.setItem("dontHTTPS", "1");
             }
@@ -107,6 +110,11 @@
                 </button>
             </header>
 
+            <!-- ODIN PKG FORGE image banner: original image file, unchanged -->
+            <div class="odin-hero-banner" aria-label="صورة أودن">
+                <img src="./includes/assets/images/odin-pkg-forge.png" alt="ODIN PKG FORGE" />
+            </div>
+
             <!-- PS Button -->
             <button id="pslogo">
                 <div id="ps-logo-container"
@@ -131,7 +139,7 @@
             <!-- Compatibility message -->
             <p id="PS4FW" class="text-white/70 text-lg mt-4 mb-6">-</p>
             <a class="hidden secondHostBtn bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center"
-                href="http://webkitty.arabpixel.net/" style="text-decoration: none;">
+                href="http://webkitty.ps4.dpdns.org/" style="text-decoration: none;">
                 <button
                     class="bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center">Load
                     payloads using a PayLoader - External link</button>
@@ -416,6 +424,17 @@
                 </div>
             </div>
         </section>
+
+        <!-- Telegram channel link -->
+        <footer class="odin-telegram-footer" dir="rtl">
+            <a href="https://t.me/ODINPKG" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M21.8 3.2a1.7 1.7 0 0 0-1.8-.3L2.8 9.5c-1.2.5-1.2 1.2-.2 1.6l4.4 1.4 1.7 5.2c.2.6.1.8.7.8.5 0 .8-.2 1.1-.5l2.5-2.4 5.2 3.8c1 .5 1.7.2 1.9-.9l2.8-13.4c.2-.9-.3-1.5-1.1-1.9ZM8 12.2l9.8-6.2c.5-.3.9-.1.5.2l-8.1 7.4-.3 3.2L8 12.2Z"/>
+                </svg>
+                <span>تابعنا على تيليجرام</span>
+                <strong>الانضمام إلى قناة ODIN PKG</strong>
+            </a>
+        </footer>
     </main>
 
 
